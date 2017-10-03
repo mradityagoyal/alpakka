@@ -14,6 +14,7 @@ import akka.stream.alpakka.oracle.bmcs.impl._
 import akka.stream.alpakka.s3.scaladsl.S3Client.MinChunkSize
 import akka.stream.scaladsl.{Sink, Source}
 import akka.util.ByteString
+import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.Future
 
@@ -40,6 +41,12 @@ object ListObjectsResultContents {
 object MultipartUploadResult {
   def apply(r: CompleteMultipartUploadResult): MultipartUploadResult =
     new MultipartUploadResult(r.bucket, r.objectName, r.etag)
+}
+
+object BmcsClient {
+
+  def apply(cred: BmcsCredentials)(implicit system: ActorSystem, mat: Materializer): BmcsClient = new BmcsClient(BmcsSettings(ConfigFactory.load()), cred)
+
 }
 
 final class BmcsClient(val settings: BmcsSettings, val cred: BmcsCredentials)(implicit system: ActorSystem,
