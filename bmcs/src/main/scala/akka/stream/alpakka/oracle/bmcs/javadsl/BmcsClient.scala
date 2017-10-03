@@ -15,6 +15,7 @@ import akka.stream.Materializer
 import akka.stream.alpakka.oracle.bmcs.BmcsSettings
 import akka.stream.alpakka.oracle.bmcs.auth.BmcsCredentials
 import akka.stream.alpakka.oracle.bmcs.impl.{BmcsStream, CompleteMultipartUploadResult, ObjectSummary}
+import akka.stream.alpakka.s3.scaladsl.S3Client.MinChunkSize
 import akka.stream.javadsl.{Sink, Source}
 import akka.util.ByteString
 import com.typesafe.config.ConfigFactory
@@ -85,7 +86,7 @@ final class BmcsClient(val settings: BmcsSettings, val cred: BmcsCredentials, sy
 
   def multipartUpload(bucket: String,
                       objectName: String,
-                      chunkSize: Int,
+                      chunkSize: Int = MinChunkSize,
                       chunkingParallelism: Int = 4): Sink[ByteString, CompletionStage[MultipartUploadResult]] =
     impl
       .multipartUpload(bucket, objectName, chunkSize, chunkingParallelism)
