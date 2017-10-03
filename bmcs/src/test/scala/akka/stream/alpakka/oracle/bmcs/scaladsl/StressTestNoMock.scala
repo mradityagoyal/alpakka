@@ -17,7 +17,7 @@ import scala.concurrent.{Await, Future}
 /**
  * Ignored by default. Tries to upload many files to bmcs.
  */
-@Ignore
+//@Ignore
 class StressTestNoMock extends BmcsNoMock {
 
   "During stress Test the client" should "upload many files correctly" in {

@@ -45,7 +45,8 @@ object MultipartUploadResult {
 
 object BmcsClient {
 
-  def apply(cred: BmcsCredentials)(implicit system: ActorSystem, mat: Materializer): BmcsClient = new BmcsClient(BmcsSettings(ConfigFactory.load()), cred)
+  def apply(cred: BmcsCredentials)(implicit system: ActorSystem, mat: Materializer): BmcsClient =
+    new BmcsClient(BmcsSettings(ConfigFactory.load()), cred)
 
 }
 
