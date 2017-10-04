@@ -8,6 +8,7 @@
 * [AWS Kinesis Connector](kinesis.md)
 * [AWS Lambda Connector](awslambda.md)
 * [AWS S3 Connector](s3.md)
+* [Oracle BMCS Connector](bmcs.md)
 * [AWS SNS Connector](sns.md)
 * [AWS SQS Connector](sqs.md)
 * [Azure Storage Queue](azure-storage-queue.md)
