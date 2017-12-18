@@ -8,7 +8,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.model.HttpResponse
 import akka.http.scaladsl.model.headers.ByteRange
 import akka.stream.Materializer
-import akka.stream.alpakka.oracle.bmcs.BmcsSettings
+import akka.stream.alpakka.oracle.bmcs.{BmcsSettings, ListObjectsResultContents, MultipartUploadResult}
 import akka.stream.alpakka.oracle.bmcs.auth.BmcsCredentials
 import akka.stream.alpakka.oracle.bmcs.impl._
 import akka.stream.scaladsl.{Sink, Source}
@@ -16,31 +16,6 @@ import akka.util.ByteString
 import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.Future
-
-final case class MultipartUploadResult(bucketName: String, objectName: String, etag: String)
-
-final case class ListObjectsResultContents(
-    /** the name of the object in bmcs **/
-    name: String,
-    /** the name of the bucket in which this object is stored. **/
-    bucket: String,
-    /** the size of the object,  in bytes **/
-    size: Option[Long],
-    /** Base64 encoded MD5 hash of the object Data.  **/
-    md5: Option[String],
-    /** The date and time the object was created, as described in RFC 2616, section 14.29. **/
-    timeCreated: Option[String]
-)
-
-object ListObjectsResultContents {
-  def apply(obj: ObjectSummary, bucket: String): ListObjectsResultContents =
-    ListObjectsResultContents(obj.name, bucket, obj.size, obj.md5, obj.timeCreated)
-}
-
-object MultipartUploadResult {
-  def apply(r: CompleteMultipartUploadResult): MultipartUploadResult =
-    new MultipartUploadResult(r.bucket, r.objectName, r.etag)
-}
 
 object BmcsClient {
   val MinChunkSize: Int = 5242880
