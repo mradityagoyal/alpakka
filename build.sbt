@@ -192,11 +192,12 @@ lazy val s3 = project
     Dependencies.S3
   )
 
-lazy val bmcs = project.dependsOn(s3)
+lazy val bmcs = project
   .enablePlugins(AutomateHeaderPlugin)
   .settings(
     name := "akka-stream-alpakka-bmcs",
-    Dependencies.Bmcs
+    Dependencies.Bmcs,
+    retrieveManaged := true
   )
 
 

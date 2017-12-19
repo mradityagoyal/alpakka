@@ -13,7 +13,6 @@ import akka.http.scaladsl.unmarshalling.{Unmarshal, Unmarshaller}
 import akka.stream.alpakka.oracle.bmcs._
 import akka.stream.Materializer
 import akka.stream.alpakka.oracle.bmcs.auth.{BmcsCredentials, BmcsSigner}
-import akka.stream.alpakka.s3.impl.{DiskBuffer, MemoryBuffer, SplitAfterSize}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.util.ByteString
 

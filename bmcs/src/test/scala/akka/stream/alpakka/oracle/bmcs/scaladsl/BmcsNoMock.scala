@@ -8,7 +8,7 @@ import java.util.UUID
 import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.alpakka.oracle.bmcs.{BmcsSettings, MemoryBufferType, TestUtil}
+import akka.stream.alpakka.oracle.bmcs.{BmcsSettings, ListObjectsResultContents, MemoryBufferType, TestUtil}
 import akka.stream.scaladsl.{Sink, Source}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Millis, Seconds, Span}
@@ -29,7 +29,7 @@ import akka.stream.alpakka.oracle.bmcs.auth._
  * Comment @ignore and run the tests
  *
  */
-@Ignore
+//@Ignore
 class BmcsNoMock extends FlatSpecLike with BeforeAndAfterAll with Matchers with ScalaFutures {
 
   implicit val actorSystem: ActorSystem = ActorSystem()
@@ -40,10 +40,10 @@ class BmcsNoMock extends FlatSpecLike with BeforeAndAfterAll with Matchers with 
     PatienceConfig(timeout = Span(5, Seconds), interval = Span(30, Millis))
 
   val userOcid = "ocid1.user.oc1..aaaaaaaaalwxriuznfhohggk7ejii6lpwo7mebuldxh455hiesnowaoaksyq"
-  val keyFingerprint = "cb:17:e0:45:d0:24:d3:ff:be:ee:1b:0e:f8:2c:58:27"
+  val keyFingerprint = "2a:1a:ab:b8:0b:6a:7b:3a:e4:f1:24:2f:6c:3b:71:ed"
   val tenancyOcid = "ocid1.tenancy.oc1..aaaaaaaa6gtmn46bketftho3sqcgrlvdfsenqemqy3urkbthlpkos54a6wsa"
-  val keyPath = "./bmcs/src/test/resources/oci_api_key.pem"
-  val passphrase: Option[String] = Some("adityag")
+  val keyPath = "./bmcs/src/test/resources/keyNew.pem"
+  val passphrase: Option[String] = None
   val cred = BasicCredentials(userOcid, tenancyOcid, keyPath, passphrase, keyFingerprint)
   val bucket = "CEGBU_Prime"
 

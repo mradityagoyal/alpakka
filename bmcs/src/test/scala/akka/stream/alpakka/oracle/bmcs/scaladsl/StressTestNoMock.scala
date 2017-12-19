@@ -8,6 +8,7 @@ import java.time.Instant
 import java.util.UUID
 
 import akka.NotUsed
+import akka.stream.alpakka.oracle.bmcs.MultipartUploadResult
 import akka.stream.scaladsl.{Sink, Source}
 import org.scalatest.Ignore
 
@@ -21,7 +22,7 @@ import scala.concurrent.{Await, Future}
 class StressTestNoMock extends BmcsNoMock {
 
   "During stress Test the client" should "upload many files correctly" in {
-    val numObjectsToUpload = 100
+    val numObjectsToUpload = 10
     val chunkSz = 10 * 1024 * 1024
     val srcOfUplods: Source[MultipartUploadResult, NotUsed] = Source
       .fromIterator(() => (1 to numObjectsToUpload).iterator)
