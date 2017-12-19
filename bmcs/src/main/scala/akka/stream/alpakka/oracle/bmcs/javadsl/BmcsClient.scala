@@ -83,7 +83,6 @@ final class BmcsClient(val settings: BmcsSettings, val cred: BmcsCredentials, sy
       .mapMaterializedValue(_.map(MultipartUploadResult.create)(system.dispatcher).toJava)
       .asJava
 
-  def delete(bucket: String, objectName: String): CompletionStage[String] = {
+  def delete(bucket: String, objectName: String): CompletionStage[String] =
     impl.delete(bucket, objectName).toJava
-  }
 }

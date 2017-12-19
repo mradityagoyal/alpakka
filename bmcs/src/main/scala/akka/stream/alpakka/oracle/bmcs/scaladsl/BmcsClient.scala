@@ -61,7 +61,6 @@ final class BmcsClient(val settings: BmcsSettings, val cred: BmcsCredentials)(im
       .multipartUpload(bucket, objectName, chunkSize, chunkingParallelism)
       .mapMaterializedValue(_.map(MultipartUploadResult.apply)(system.dispatcher))
 
-  def delete(bucket: String, objectName: String): Future[String] = {
+  def delete(bucket: String, objectName: String): Future[String] =
     impl.delete(bucket, objectName)
-  }
 }

@@ -131,13 +131,13 @@ class BmcsStream(settings: BmcsSettings, credentials: BmcsCredentials)(implicit 
     chunkAndRequest(bucket, objectName, chunkSize)(chunkingParallelism)
       .toMat(completionSink(bucket, objectName))(Keep.right)
 
-
   def delete(bucket: String, objectName: String): Future[String] = {
     import mat.executionContext
     val request = getDeleteRequest(bucket, objectName)
     val deletion: Future[HttpResponse] = signAndGet(request)
     deletion.map(response => response.status.toString())
   }
+
   /**
    * Initiates the multipart upload.
    * https://docs.us-phoenix-1.oraclecloud.com/api/#/en/objectstorage/20160918/MultipartUpload/CreateMultipartUpload
