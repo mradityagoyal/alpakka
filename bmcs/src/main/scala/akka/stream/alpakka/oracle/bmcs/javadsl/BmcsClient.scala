@@ -20,6 +20,7 @@ import akka.util.ByteString
 import com.typesafe.config.ConfigFactory
 
 import scala.compat.java8.FutureConverters._
+import scala.concurrent.Future
 
 object BmcsClient {
   val MinChunkSize: Int = 5242880
@@ -82,4 +83,7 @@ final class BmcsClient(val settings: BmcsSettings, val cred: BmcsCredentials, sy
       .mapMaterializedValue(_.map(MultipartUploadResult.create)(system.dispatcher).toJava)
       .asJava
 
+  def delete(bucket: String, objectName: String): CompletionStage[String] = {
+    impl.delete(bucket, objectName).toJava
+  }
 }

@@ -65,6 +65,12 @@ object HttpRequests {
     request
   }
 
+  def getDeleteRequest(bucket: String, objectName: String)(implicit conf: BmcsSettings): HttpRequest = {
+    HttpRequest(HttpMethods.DELETE)
+      .withHeaders(Host(requestHost))
+      .withUri(requestUri(bucket, Some(s"o/$objectName")))
+  }
+
   private[this] def requestUri(bucket: String, key: Option[String] = None)(implicit conf: BmcsSettings): Uri = {
     val basePath = Uri.Path / "n" / conf.namespace / "b" / bucket
     val path = key.fold(basePath) { someKey =>

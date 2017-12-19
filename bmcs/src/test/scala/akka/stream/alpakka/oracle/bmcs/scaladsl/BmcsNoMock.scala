@@ -17,6 +17,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpecLike, Ignore, Matchers}
 import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.concurrent.duration._
 import akka.stream.alpakka.oracle.bmcs.auth._
+import akka.util.ByteString
 
 /*
  * This is an integration test and ignored by default
@@ -54,7 +55,7 @@ class BmcsNoMock extends FlatSpecLike with BeforeAndAfterAll with Matchers with 
 
   "BmcsClient " should "upload a document " in {
 
-    val objectName = s"BmcsNoMockTest-${UUID.randomUUID().toString.take(5)}"
+    val objectName = s"AGOYAL-${UUID.randomUUID().toString.take(5)}"
     val sink = client.multipartUpload(bucket, objectName)
 
     val result = largeSrc.runWith(sink)
@@ -65,11 +66,15 @@ class BmcsNoMock extends FlatSpecLike with BeforeAndAfterAll with Matchers with 
     //compare the hashes of the upload and download.
     val download = client.download(bucket, objectName)
 
-    val hashOfDownload = download.runWith(digest())
+    val hashOfDownload: Future[ByteString] = download.runWith(digest())
     val hashOfUpload = largeSrc.runWith(digest())
 
     val uploadHash = Await.ready(hashOfUpload, 20.seconds).futureValue
     val downloadHash = Await.ready(hashOfDownload, 20.seconds).futureValue
+    val maybeDelete = client.delete(bucket, "AGOYAL-41085")
+    val delte = Await.ready(maybeDelete, 20.seconds).futureValue
+    println("************* deleted. ")
+
     uploadHash should equal(downloadHash)
   }
 
