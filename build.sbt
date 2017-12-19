@@ -196,8 +196,7 @@ lazy val bmcs = project
   .enablePlugins(AutomateHeaderPlugin)
   .settings(
     name := "akka-stream-alpakka-bmcs",
-    Dependencies.Bmcs,
-    retrieveManaged := true
+    Dependencies.Bmcs
   )
 
 
